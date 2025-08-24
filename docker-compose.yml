@@ -1,0 +1,30 @@
+services:
+  service-a:
+    build:
+      context: ./service-a
+    container_name: service-a
+    environment:
+      PORT: "7001"
+      NODE_ENV: "dev"
+      SERVICE_B_BASE_URL: "http://service-b:7002"
+    ports:
+      - "7001:7001"            # publish to host
+    networks: [backend]
+    restart: unless-stopped
+
+  service-b:
+    build:
+      context: ./service-b
+    container_name: service-b
+    environment:
+      PORT: "7002"
+      NODE_ENV: "dev"
+      SERVICE_A_BASE_URL: "http://service-a:7001"
+    ports:
+      - "7002:7002"            # publish to host
+    networks: [backend]
+    restart: unless-stopped
+
+networks:
+  backend:
+    driver: bridge
