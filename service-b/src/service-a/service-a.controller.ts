@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { ServiceAService } from './service-a.service';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
-import  permissions from '../permessions.json';
+import permissions from '../permessions.json';
 
 @Controller('service-a')
 @ApiTags('Service A')
@@ -17,9 +17,6 @@ export class ServiceAController {
 
   @Get()
   async getHello() {
-    if (!permissions.includes('read')) {
-      throw new UnauthorizedException();
-    }
     return this.serviceAService.getHello();
   }
 
@@ -34,9 +31,6 @@ export class ServiceAController {
     },
   })
   async writeHello(@Body('message') message: string) {
-    if (!permissions.includes('write')) {
-      throw new UnauthorizedException();
-    }
     return this.serviceAService.writeHello(message);
   }
 }

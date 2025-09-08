@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class ServiceAService {
   private readonly serviceAUrl: string;
+  private jwtSecret: string;
 
   constructor(
     private readonly httpService: HttpService,
@@ -12,14 +13,19 @@ export class ServiceAService {
   ) {
     this.serviceAUrl =
       this.configService.getOrThrow<string>('SERVICE_A_BASE_URL');
+    this.jwtSecret = this.configService.getOrThrow<string>('SERVICE_JWT_TOKEN');
   }
 
   async getHello(): Promise<string> {
     try {
-      const response = await this.httpService.axiosRef.get(this.serviceAUrl);
+      const response = await this.httpService.axiosRef.get(this.serviceAUrl, {
+        headers: {
+          Authorization: `Bearer ${this.jwtSecret}`,
+        },
+      });
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       if (error.response && error.response.status === 401) {
         throw new UnauthorizedException('Unauthorized access to Service A');
       }
@@ -29,9 +35,17 @@ export class ServiceAService {
 
   async writeHello(message: string): Promise<string> {
     try {
-      const response = await this.httpService.axiosRef.post(this.serviceAUrl, {
-       message,
-      });
+      const response = await this.httpService.axiosRef.post(
+        this.serviceAUrl,
+        {
+          message,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${this.jwtSecret}`,
+          },
+        },
+      );
       return response.data;
     } catch (error) {
       if (error.response && error.response.status === 401) {

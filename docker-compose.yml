@@ -7,6 +7,7 @@ services:
       PORT: "7001"
       NODE_ENV: "dev"
       SERVICE_B_BASE_URL: "http://service-b:7002"
+      SERVICE_JWT_TOKEN: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTg0N2FmNC04M2QyLTRhNWEtYmU5My1kYmUxZGUyMmRlZjIiLCJyb2xlcyI6WyJHVUFSRElBTiJdLCJpYXQiOjE3NTczMjEzMzYsImV4cCI6MTc1NzQwNzczNn0.9npgNs9c0QGPTdvyLx4_WODktczg19TaslBZEGj8vgU"
     ports:
       - "7001:7001"            # publish to host
     networks: [backend]
@@ -20,6 +21,7 @@ services:
       PORT: "7002"
       NODE_ENV: "dev"
       SERVICE_A_BASE_URL: "http://service-a:7001"
+      SERVICE_JWT_TOKEN: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTg0N2FmNC04M2QyLTRhNWEtYmU5My1kYmUxZGUyMmRlZjIiLCJyb2xlcyI6WyJHVUFSRElBTiJdLCJpYXQiOjE3NTczMjEzMzYsImV4cCI6MTc1NzQwNzczNn0.9npgNs9c0QGPTdvyLx4_WODktczg19TaslBZEGj8vgU"
     ports:
       - "7002:7002"            # publish to host
     networks: [backend]
